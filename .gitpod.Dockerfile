@@ -3,7 +3,7 @@ FROM gitpod/workspace-full-vnc
 USER gitpod
 
 RUN sudo apt-get update && \
-    sudo apt-get install -y firefox xterm && \
+    sudo apt-get install -y libnss3-dev firefox xterm && \
     sudo rm -rf /var/lib/apt/lists/*
 
 # Install custom tools, runtime, etc. using apt-get

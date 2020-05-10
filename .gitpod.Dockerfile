@@ -11,7 +11,8 @@ RUN sudo apt-get update && \
     wget https://github.com/wpilibsuite/allwpilib/releases/download/v2020.3.2/WPILib_Linux-2020.3.2.tar.gz && \ 
     tar -xf WPILib_Linux-2020.3.2.tar.gz && \
     cd tools && \
-    python3 ToolsUpdater.py 
+    python3 ToolsUpdater.py && \
+    echo "wpilib installed!"
     
 
 

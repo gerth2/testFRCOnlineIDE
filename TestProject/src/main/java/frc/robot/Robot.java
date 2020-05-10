@@ -8,6 +8,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import frc.lib.Calibration.CalWrangler;
+import frc.lib.DataServer.CasseroleDataServer;
+import frc.lib.DataServer.Signal;
+import frc.lib.LoadMon.CasseroleRIOLoadMonitor;
+import frc.lib.WebServer.CasseroleWebServer;
+
+import java.io.IOException;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,14 +27,44 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
 
-  /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
-   */
-  @Override
-  public void robotInit() {
-    System.out.println("Robot Init completed!");
-  }
+    // Website utilities
+    CasseroleWebServer webserver;
+    CalWrangler wrangler;
+    CasseroleDataServer dataServer;
+    LoopTiming loopTiming;
+    CasseroleRIOLoadMonitor loadMon;
+
+    Signal teleopInitCounterSig;
+    int teleopInitCounter = 0;
+
+    /**
+     * This function is run when the robot is first started up and should be used
+     * for any initialization code.
+     */
+    @Override
+    public void robotInit() {
+
+        /* Init website utilties */
+        webserver = new CasseroleWebServer();
+        wrangler = new CalWrangler();
+        dataServer = CasseroleDataServer.getInstance();
+        loadMon = new CasseroleRIOLoadMonitor();
+
+        teleopInitCounterSig = new Signal("Teleop Init Count", "count");
+
+        dataServer.startServer();
+        webserver.startServer();
+
+        try {
+            Runtime.getRuntime().exec("firefox localhost:5805");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        System.out.println("Robot Init completed!");
+    }
 
 
   @Override
@@ -38,6 +77,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+      telemetryUpdate();
   }
 
   /**
@@ -45,6 +85,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopInit() {
+    teleopInitCounter++;
     System.out.println("Teleop Init completed!");
   }
 
@@ -53,7 +94,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    System.out.println("Teleop Periodic!");
+      telemetryUpdate();
   }
 
   /**
@@ -68,6 +109,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledPeriodic() {
+      telemetryUpdate();
   }
 
   /**
@@ -82,5 +124,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  void telemetryUpdate(){
+      double sampleTime = Timer.getFPGATimestamp()*1000;
+      teleopInitCounterSig.addSample(sampleTime, teleopInitCounter);
+
   }
 }

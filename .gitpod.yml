@@ -1,11 +1,10 @@
-tasks:
-
 image:
   file: .gitpod.Dockerfile
 
 ports:
   - port: 6080
     onOpen: open-preview
+    
 vscode:
   extensions:
     - ms-vscode.cpptools@0.26.2:TkbJMXArQ9iIo9ySZRerdQ==

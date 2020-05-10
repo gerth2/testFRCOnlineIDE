@@ -1,6 +1,15 @@
 tasks:
-  - init: echo "Replace me with a build script for the project."
-    command: echo "Replace me with something that should run on every start, or just
-      remove me entirely."
+  - command: gp await-port 6080            &&
+             xterm                         &&
+             gp preview $(gp url 6080)     
+
 image:
   file: .gitpod.Dockerfile
+
+ports:
+  - port: 6080
+    onOpen: open-preview
+
+vscode:
+  extensions:
+    - wpilibsuite.vscode-wpilib@2020.3.2:RAxZwFw1Ra3mIl+oIDddXg==

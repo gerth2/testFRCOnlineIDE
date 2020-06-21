@@ -1,17 +1,19 @@
-FROM gitpod/workspace-full-vnc
-                    
-USER gitpod
+FROM mcr.microsoft.com/windows
 
-RUN sudo apt-get update && \
-    sudo apt-get install -y libnss3-dev libvulkan1 firefox xterm && \
-    sudo rm -rf /var/lib/apt/lists/* && \
-    cd ~ && \
-    mkdir wpilib && cd wpilib && \
-    mkdir 2020 && cd 2020 && \
-    wget https://github.com/wpilibsuite/allwpilib/releases/download/v2020.3.2/WPILib_Linux-2020.3.2.tar.gz && \ 
-    tar -xf WPILib_Linux-2020.3.2.tar.gz && \
-    cd tools && \
-    python3 ToolsUpdater.py 
+#FROM gitpod/workspace-full-vnc
+#                    
+#USER gitpod
+#
+#RUN sudo apt-get update && \
+#    sudo apt-get install -y libnss3-dev libvulkan1 firefox xterm && \
+#    sudo rm -rf /var/lib/apt/lists/* && \
+#    cd ~ && \
+#    mkdir wpilib && cd wpilib && \
+#    mkdir 2020 && cd 2020 && \
+#    wget https://github.com/wpilibsuite/allwpilib/releases/download/v2020.3.2/WPILib_Linux-2020.3.2.tar.gz && \ 
+#    tar -xf WPILib_Linux-2020.3.2.tar.gz && \
+#    cd tools && \
+#    python3 ToolsUpdater.py 
     
 
 

@@ -16,5 +16,4 @@ RUN sudo apt-get update && \
     mkdir -p ~/wpilib && \
     mv 2021 ~/wpilib && \
     rm -rf WPILib_Linux-* && \
-    cd ~/wpilib/2021/tools/ && python3 ToolsUpdater.py && \
-    cd ~/wpilib/2021/vsCodeExtensions && find . -name "*.vsix" | xargs -I {} code --install-extension {} 
+    cd ~/wpilib/2021/tools/ && python3 ToolsUpdater.py
